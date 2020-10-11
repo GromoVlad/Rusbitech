@@ -25,6 +25,7 @@ class ApiController extends Controller
      * @OA\Get(
      *     path="/newsList",
      *     tags = {"ApiController"},
+     *     summary="Возвращает 'список новостей'",
      *     @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -70,6 +71,8 @@ class ApiController extends Controller
      * @OA\Get(
      *     path="/news/{news_id}",
      *     tags = {"ApiController"},
+     *     summary="Возвращает данные по конкретной новости",
+
      *     @OA\Parameter(
      *          name="news_id",
      *          in="path",

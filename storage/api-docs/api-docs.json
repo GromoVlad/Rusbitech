@@ -16,6 +16,7 @@
                 "tags": [
                     "ApiController"
                 ],
+                "summary": "Возвращает 'список новостей'",
                 "operationId": "App\\Http\\Controllers\\ApiController::newsList",
                 "parameters": [
                     {
@@ -73,6 +74,7 @@
                 "tags": [
                     "ApiController"
                 ],
+                "summary": "Возвращает данные по конкретной новости",
                 "operationId": "App\\Http\\Controllers\\ApiController::news",
                 "parameters": [
                     {
