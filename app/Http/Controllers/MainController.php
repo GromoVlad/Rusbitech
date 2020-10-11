@@ -9,9 +9,10 @@ use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
-    public function list(Request $request)
+
+    public function newsList(Request $request)
     {
-        $list = (new ListBuilder($request))->getList()->paginate(7)->withPath("?" . $request->getQueryString());
+        $list = (new ListBuilder($request))->getList()->paginate(3)->withPath("?" . $request->getQueryString());
         $authors = Author::select('id', 'name')->get();
         return view('list', compact('list', 'authors'));
     }

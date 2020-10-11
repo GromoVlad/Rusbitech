@@ -1,0 +1,111 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Rusbitech API Single Page Application ",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://rusbitech/api",
+            "description": "Laravel Swagger API Server"
+        }
+    ],
+    "paths": {
+        "/newsList": {
+            "get": {
+                "tags": [
+                    "ApiController"
+                ],
+                "operationId": "App\\Http\\Controllers\\ApiController::newsList",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Номер страницы:",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "date_from",
+                        "in": "query",
+                        "description": "Дата публикации от: (вводить в формате YYYY-MM-DD, например 2020-10-7)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "date_to",
+                        "in": "query",
+                        "description": "Дата публикации до: (вводить в формате YYYY-MM-DD, например 2020-10-7)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "author",
+                        "in": "query",
+                        "description": "Автор публикации, доступные id-авторов указаны в JSON-ответе по этому запросу в массиве (authors)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Сервер вернул 'список новостей'"
+                    },
+                    "404": {
+                        "description": "Ресурс не найден"
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервера"
+                    }
+                }
+            }
+        },
+        "/news/{news_id}": {
+            "get": {
+                "tags": [
+                    "ApiController"
+                ],
+                "operationId": "App\\Http\\Controllers\\ApiController::news",
+                "parameters": [
+                    {
+                        "name": "news_id",
+                        "in": "path",
+                        "description": "Id новости",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Сервер вернул 'список новостей'"
+                    },
+                    "404": {
+                        "description": "Ресурс не найден"
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервера"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "ApiController",
+            "description": "Контроллер для передачи SPA данных в JSON-формате"
+        }
+    ],
+    "security": [
+        []
+    ]
+}

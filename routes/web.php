@@ -13,9 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/list', 'App\Http\Controllers\MainController@list')->name('list');
+Route::get('/', 'App\Http\Controllers\MainController@newsList')->name('newsList');
 Route::get('/news/{id}', 'App\Http\Controllers\MainController@news')->name('news');
+
+Route::get('/api/newsList', 'App\Http\Controllers\ApiController@newsList');
+Route::get('/api/news/{id}', 'App\Http\Controllers\ApiController@news');

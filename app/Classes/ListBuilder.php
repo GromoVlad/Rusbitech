@@ -13,14 +13,19 @@ class ListBuilder
     public function __construct(Request $request)
     {
         $this->params = $request;
-        $this->list = News::leftJoin('authors', 'news.author_id', '=', 'authors.id')->select('news.id', 'news.name',
-            'news.announce', 'news.date', 'authors.name as author_name');
-        $this->checkAuthor()->checkDateFrom()->checkDateTo();
+        $this->basicQuery()->checkAuthor()->checkDateFrom()->checkDateTo();
     }
 
     public function getList()
     {
         return $this->list;
+    }
+
+    private function basicQuery()
+    {
+        $this->list = News::leftJoin('authors', 'news.author_id', '=', 'authors.id')->select('news.id', 'news.name',
+            'news.announce', 'news.date', 'authors.name as author_name');
+        return $this;
     }
 
     private function checkAuthor()

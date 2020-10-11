@@ -11,7 +11,7 @@
 </head>
 <body>
     <br>
-    <form method="GET" action="{{ route('list') }}"  style="width: 1170px; margin: 20px auto">
+    <form method="GET" action="{{ route('newsList') }}"  style="width: 1170px; margin: 20px auto">
         <h3>Фильтр по категориям:</h3>
         <div style="display: flex; margin: 10px 0">
             <div style="display: flex; align-items: center">
