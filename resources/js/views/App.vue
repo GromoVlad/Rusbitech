@@ -1,16 +1,10 @@
 <template>
-    <div>
-        <h1>Vue Router Demo App</h1>
-
+    <div class="container">
+        <h1>Vue Single Page Application </h1>
         <p>
-            <router-link :to="{ name: 'home' }">Home</router-link> |
-            <router-link :to="{ name: 'hello' }">Hello World</router-link> |
-            <router-link :to="{ name: 'news' }">News</router-link>
+            <router-link :to="{ name: 'newsList' }">Все новости</router-link>
         </p>
-
-        <div class="container">
-            <router-view></router-view>
-        </div>
+        <router-view></router-view>
     </div>
 </template>
 <script>

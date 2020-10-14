@@ -4,26 +4,19 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import App from './views/App'
-import Hello from './views/Hello'
-import Home from './views/Home'
+import NewsList from './views/NewsList'
 import News from './views/News'
-
 
 const router = new VueRouter({
     mode: 'history',
     routes: [
         {
             path: '/',
-            name: 'home',
-            component: Home
+            name: 'newsList',
+            component: NewsList,
         },
         {
-            path: '/hello',
-            name: 'hello',
-            component: Hello,
-        },
-        {
-            path: '/news',
+            path: '/news/:id',
             name: 'news',
             component: News,
         },

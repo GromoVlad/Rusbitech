@@ -80,7 +80,7 @@ class ApiController extends Controller
      *          required=true,
      *          @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Сервер вернул 'список новостей'"),
+     *     @OA\Response(response="200", description="Сервер вернул новость"),
      *     @OA\Response(response="404", description="Ресурс не найден"),
      *     @OA\Response(response="500", description="Внутренняя ошибка сервера")
      * )
