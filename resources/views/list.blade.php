@@ -41,6 +41,10 @@
                     @endif
                 >
             </div>
+            <div style="display: flex; align-items: center">
+                <div style="margin: 0 20px;">Поиск по названию:</div>
+                <input type="text" class="form-control" name="newsSearch" placeholder="Поиск по названию">
+            </div>
             <button class="btn btn btn-outline-info" style="margin: 0 20px;">Фильтр</button>
         </div>
     </form>

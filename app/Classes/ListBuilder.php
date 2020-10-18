@@ -13,7 +13,7 @@ class ListBuilder
     public function __construct(Request $request)
     {
         $this->params = $request;
-        $this->basicQuery()->checkAuthor()->checkDateFrom()->checkDateTo();
+        $this->basicQuery()->checkAuthor()->checkDateFrom()->checkDateTo()->checkNewsTitle();
     }
 
     public function getList()
@@ -51,5 +51,15 @@ class ListBuilder
         }
         return $this;
     }
+
+    private function checkNewsTitle()
+    {
+        if(!is_null($this->params['newsSearch'])){
+            $this->list = $this->list->where('news.name', 'like', '%' . $this->params['newsSearch'] . '%');
+        }
+        return $this;
+    }
+
+
 
 }
