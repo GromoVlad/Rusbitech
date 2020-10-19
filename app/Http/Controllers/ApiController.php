@@ -34,14 +34,14 @@ class ApiController extends Controller
      *          @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
-     *          name="date_from",
+     *          name="dateFrom",
      *          in="query",
      *          description="Дата публикации от: (вводить в формате YYYY-MM-DD, например 2020-10-7)",
      *          required=false,
      *          @OA\Schema(type="date")
      *     ),
      *     @OA\Parameter(
-     *          name="date_to",
+     *          name="dateTo",
      *          in="query",
      *          description="Дата публикации до: (вводить в формате YYYY-MM-DD, например 2020-10-7)",
      *          required=false,
@@ -53,6 +53,13 @@ class ApiController extends Controller
      *          description="Автор публикации, доступные id-авторов указаны в JSON-ответе по этому запросу в массиве (authors)",
      *          required=false,
      *          @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *          name="newsSearch",
+     *          in="query",
+     *          description="Поиск статьи по названию",
+     *          required=false,
+     *          @OA\Schema(type="string")
      *     ),
      *     @OA\Response(response="200", description="Сервер вернул 'список новостей'"),
      *     @OA\Response(response="404", description="Ресурс не найден"),

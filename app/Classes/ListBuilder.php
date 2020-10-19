@@ -38,16 +38,16 @@ class ListBuilder
 
     private function checkDateFrom()
     {
-        if(!is_null($this->params['date_from'])){
-            $this->list = $this->list->where('date', '>=', $this->params['date_from']);
+        if(!is_null($this->params['dateFrom'])){
+            $this->list = $this->list->where('date', '>=', $this->params['dateFrom']);
         }
         return $this;
     }
 
     private function checkDateTo()
     {
-        if(!is_null($this->params['date_to'])){
-            $this->list = $this->list->where('date', '<=', $this->params['date_to']);
+        if(!is_null($this->params['dateTo'])){
+            $this->list = $this->list->where('date', '<=', $this->params['dateTo']);
         }
         return $this;
     }
@@ -59,7 +59,4 @@ class ListBuilder
         }
         return $this;
     }
-
-
-
 }

@@ -3545,6 +3545,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -3573,12 +3574,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       id: this.$router.currentRoute.params['id'],
-      url: '/api/news/',
       news: null
     };
   },
@@ -3595,9 +3607,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.error = this.news = null;
-      this.loading = true;
-      console.log(this.url + this.id);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.url + this.id).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/news/' + this.id).then(function (response) {
         _this.news = response.data;
       })["catch"](function (error) {
         _this.loading = false;
@@ -3720,61 +3730,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      url: '/api/newsList',
       authors: null,
       author: null,
       error: null,
       links: null,
-      date_from: null,
-      date_to: null,
+      dateFrom: null,
+      dateTo: null,
       tableNews: null,
       dialogVisible: false,
       newsSearch: null,
@@ -3785,15 +3750,15 @@ __webpack_require__.r(__webpack_exports__);
     this.fetchData();
   },
   beforeUpdate: function beforeUpdate() {
-    console.log(this.$route.fullPath);
+    this.links[0].label = '<';
+    this.links[this.links.length - 1].label = '>';
   },
   methods: {
     fetchData: function fetchData() {
       var _this = this;
 
       this.error = this.tableData = null;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.url + this.$route.fullPath).then(function (response) {
-        // console.log(response);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/newsList' + this.$route.fullPath).then(function (response) {
         _this.authors = response.data.authors;
         _this.links = response.data.list.links;
         _this.tableNews = response.data.list.data;
@@ -3802,11 +3767,6 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     pagination: function pagination(page) {
-      //   const delPage = /&page=[^&]+/i;
-      //   this.url = this.url.replace(delPage, '');
-      //   this.url = this.url + '&page=' + page.url.slice(-1);
-      // this.queryParams = this.queryParams.replace(delPage, '');
-      //  this.queryParams += '&page=' + page.url.slice(-1);
       this.$router.push({
         path: this.queryParams,
         query: {
@@ -3815,61 +3775,52 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.fetchData();
     },
-    filter_out: function filter_out() {
-      //   this.url = '/api/newsList/?';
+    filterOut: function filterOut() {
       this.queryParams = '/?';
 
       if (this.author !== null) {
-        //    this.url = this.url + '&author=' + this.author;
-        this.queryParams += '&author=' + this.author;
         this.$router.push({
           path: this.queryParams,
           query: {
             author: this.author
           }
         });
+        this.queryParams += '&author=' + this.author;
       }
 
-      if (this.date_from !== null) {
-        //     this.url = this.url + '&date_from=' + this.date_from;
-        this.queryParams += '&date_from=' + this.date_from;
+      if (this.dateFrom !== null) {
         this.$router.push({
           path: this.queryParams,
           query: {
-            date_from: this.date_from
+            dateFrom: this.dateFrom
           }
         });
+        this.queryParams += '&dateFrom=' + this.dateFrom;
       }
 
-      if (this.date_to !== null) {
-        //      this.url = this.url + '&date_to=' + this.date_to;
-        this.queryParams += '&date_to=' + this.date_to;
+      if (this.dateTo !== null) {
         this.$router.push({
           path: this.queryParams,
           query: {
-            date_to: this.date_to
+            dateTo: this.dateTo
           }
         });
+        this.queryParams += '&dateTo=' + this.dateTo;
       }
 
-      this.fetchData();
       this.dialogVisible = false;
-      this.newsSearch = ''; //   this.$router.push({ path: '/', query: { plan: 'private' } })
-      //this.$router.push({ path: '/', query: { plan : this.queryParams } })
-      // this.$router.push({ path: '/', query: 'two'  })
+      this.newsSearch = '';
+      this.fetchData();
     },
     checkNewsTitle: function checkNewsTitle() {
-      //  console.log(this.newsSearch);
-      //    this.url = '/api/newsList/?';
       if (this.newsSearch !== null) {
-        //     this.url = this.url + '&newsSearch=' + this.newsSearch;
-        this.queryParams += '&newsSearch=' + this.newsSearch;
         this.$router.push({
           path: this.queryParams,
           query: {
             newsSearch: this.newsSearch
           }
         });
+        this.queryParams += '&newsSearch=' + this.newsSearch;
       }
 
       this.fetchData();
@@ -65364,13 +65315,11 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
-      _c("h1", [_vm._v("Vue Single Page Application ")]),
-      _vm._v(" "),
       _c(
-        "p",
+        "el-row",
         [
-          _c("router-link", { attrs: { to: { name: "newsList" } } }, [
-            _vm._v("Все новости")
+          _c("el-col", { attrs: { span: 18, offset: 3 } }, [
+            _c("h1", [_vm._v("Vue Single Page Application")])
           ])
         ],
         1
@@ -65404,39 +65353,84 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "news" },
+    "el-row",
     [
-      _vm.news
-        ? _c("ul", [
-            _c("strong", [_vm._v("Название:")]),
-            _vm._v(" " + _vm._s(_vm.news.name)),
-            _c("br"),
-            _vm._v(" "),
-            _c("strong", [_vm._v("Дата создания:")]),
-            _vm._v(" " + _vm._s(_vm.news.date)),
-            _c("br"),
-            _vm._v(" "),
-            _c("strong", [_vm._v("Подробное описание:")]),
-            _vm._v(" " + _vm._s(_vm.news.content)),
-            _c("br"),
-            _vm._v(" "),
-            _c("strong", [_vm._v("Автор:")]),
-            _vm._v(" " + _vm._s(_vm.news.author_name)),
-            _c("br"),
-            _vm._v(" "),
-            _c("strong", [_vm._v("Рейтинг издания:")]),
-            _vm._v(" " + _vm._s(_vm.news.rating)),
-            _c("br"),
-            _vm._v(" "),
-            _c("strong", [_vm._v("Количество статей:")]),
-            _vm._v(" " + _vm._s(_vm.news.count_news)),
-            _c("br")
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _c("router-link", { attrs: { to: { name: "newsList" } } }, [
-        _vm._v("← К новостям")
+      _c("el-col", { attrs: { span: 18, offset: 3 } }, [
+        _vm.news
+          ? _c(
+              "div",
+              [
+                _c(
+                  "el-col",
+                  { attrs: { span: 18 } },
+                  [
+                    _c(
+                      "el-card",
+                      { staticClass: "box-card", attrs: { header: "Статья" } },
+                      [
+                        _c("p", [
+                          _c("strong", [_vm._v("Название:")]),
+                          _vm._v(" " + _vm._s(_vm.news.name))
+                        ]),
+                        _vm._v(" "),
+                        _c("p", [
+                          _c("strong", [_vm._v("Дата создания:")]),
+                          _vm._v(" " + _vm._s(_vm.news.date))
+                        ]),
+                        _vm._v(" "),
+                        _c("p", [
+                          _c("strong", [_vm._v("Подробное описание:")]),
+                          _vm._v(" " + _vm._s(_vm.news.content))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "router-link",
+                          { attrs: { to: { name: "newsList" } } },
+                          [
+                            _c("el-page-header", {
+                              attrs: { title: "К новостям" }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "el-col",
+                  { attrs: { span: 4, offset: 1 } },
+                  [
+                    _c(
+                      "el-card",
+                      {
+                        staticClass: "box-card",
+                        attrs: { header: "Данные о авторе" }
+                      },
+                      [
+                        _c("strong", [_vm._v("Автор:")]),
+                        _vm._v(" " + _vm._s(_vm.news.author_name)),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("strong", [_vm._v("Рейтинг издания:")]),
+                        _vm._v(" " + _vm._s(_vm.news.rating)),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("strong", [_vm._v("Количество статей:")]),
+                        _vm._v(" " + _vm._s(_vm.news.count_news)),
+                        _c("br")
+                      ]
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          : _vm._e()
       ])
     ],
     1
@@ -65467,274 +65461,320 @@ var render = function() {
   return _c(
     "el-row",
     [
-      _c("el-col", { attrs: { span: 18, offset: 3 } }, [
-        _c(
-          "div",
-          { staticClass: "grid-content bg-purple-dark" },
-          [
-            _vm.error
-              ? _c("div", { staticClass: "error" }, [
-                  _vm._v(
-                    "\n            " + _vm._s(_vm.error) + "\n            "
-                  ),
-                  _c("p", [
-                    _c(
-                      "button",
-                      {
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.fetchData($event)
-                          }
+      _c(
+        "el-col",
+        { attrs: { span: 18, offset: 3 } },
+        [
+          _vm.error
+            ? _c("div", { staticClass: "error" }, [
+                _vm._v("\n            " + _vm._s(_vm.error) + "\n            "),
+                _c("p", [
+                  _c(
+                    "button",
+                    {
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.fetchData($event)
                         }
-                      },
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    Попробовать снова!\n                "
+                      )
+                    ]
+                  )
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "el-row",
+            [
+              _c("el-input", {
+                staticStyle: { width: "30%", margin: "10px 0" },
+                attrs: { placeholder: "Найти новость по заголовку..." },
+                on: {
+                  change: function($event) {
+                    return _vm.checkNewsTitle()
+                  }
+                },
+                model: {
+                  value: _vm.newsSearch,
+                  callback: function($$v) {
+                    _vm.newsSearch = $$v
+                  },
+                  expression: "newsSearch"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            {
+              attrs: { type: "primary" },
+              on: {
+                click: function($event) {
+                  _vm.dialogVisible = true
+                }
+              }
+            },
+            [_vm._v("Фильтры")]
+          ),
+          _vm._v(" "),
+          _c(
+            "el-dialog",
+            {
+              attrs: {
+                title: "Фильтры:",
+                visible: _vm.dialogVisible,
+                width: "50%"
+              },
+              on: {
+                "update:visible": function($event) {
+                  _vm.dialogVisible = $event
+                }
+              }
+            },
+            [
+              _c(
+                "el-row",
+                [
+                  _c(
+                    "el-col",
+                    { attrs: { span: 6, offset: 1 } },
+                    [
+                      _c("p", { staticClass: "demonstration" }, [
+                        _vm._v("Автор: ")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "el-select",
+                        {
+                          attrs: { placeholder: "Выберите автора" },
+                          model: {
+                            value: _vm.author,
+                            callback: function($$v) {
+                              _vm.author = $$v
+                            },
+                            expression: "author"
+                          }
+                        },
+                        [
+                          _c("el-option", {
+                            key: 0,
+                            attrs: { label: "Все авторы", value: 0 }
+                          }),
+                          _vm._v(" "),
+                          _vm._l(_vm.authors, function(item) {
+                            return _c("el-option", {
+                              key: item.id,
+                              attrs: { label: item.name, value: item.id }
+                            })
+                          })
+                        ],
+                        2
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("el-col", { attrs: { span: 6, offset: 1 } }, [
+                    _c(
+                      "div",
+                      { staticClass: "block" },
                       [
-                        _vm._v(
-                          "\n                    Попробовать снова!\n                "
-                        )
-                      ]
+                        _c("p", { staticClass: "demonstration" }, [
+                          _vm._v("Дата от: ")
+                        ]),
+                        _vm._v(" "),
+                        _c("el-date-picker", {
+                          attrs: {
+                            type: "date",
+                            "value-format": "yyyy-MM-dd",
+                            placeholder: "Выберите день"
+                          },
+                          model: {
+                            value: _vm.dateFrom,
+                            callback: function($$v) {
+                              _vm.dateFrom = $$v
+                            },
+                            expression: "dateFrom"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("el-col", { attrs: { span: 6, offset: 1 } }, [
+                    _c(
+                      "div",
+                      { staticClass: "block" },
+                      [
+                        _c("p", { staticClass: "demonstration" }, [
+                          _vm._v("Дата до:")
+                        ]),
+                        _vm._v(" "),
+                        _c("el-date-picker", {
+                          attrs: {
+                            type: "date",
+                            "value-format": "yyyy-MM-dd",
+                            placeholder: "Выберите день"
+                          },
+                          model: {
+                            value: _vm.dateTo,
+                            callback: function($$v) {
+                              _vm.dateTo = $$v
+                            },
+                            expression: "dateTo"
+                          }
+                        })
+                      ],
+                      1
                     )
                   ])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("el-input", {
-              staticStyle: { width: "30%", margin: "10px 0" },
-              attrs: { placeholder: "Найти новость по заголовку..." },
-              on: {
-                change: function($event) {
-                  return _vm.checkNewsTitle()
-                }
-              },
-              model: {
-                value: _vm.newsSearch,
-                callback: function($$v) {
-                  _vm.newsSearch = $$v
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "dialog-footer",
+                  attrs: { slot: "footer" },
+                  slot: "footer"
                 },
-                expression: "newsSearch"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "el-button",
-              {
-                attrs: { type: "primary" },
-                on: {
-                  click: function($event) {
-                    _vm.dialogVisible = true
-                  }
-                }
-              },
-              [_vm._v("Фильтры")]
-            ),
-            _vm._v(" "),
-            _c(
-              "el-dialog",
-              {
-                attrs: {
-                  title: "Фильтры:",
-                  visible: _vm.dialogVisible,
-                  width: "50%"
-                },
-                on: {
-                  "update:visible": function($event) {
-                    _vm.dialogVisible = $event
-                  }
-                }
-              },
-              [
-                _c(
-                  "div",
-                  [
-                    _c(
-                      "el-select",
-                      {
-                        attrs: { placeholder: "Автор" },
-                        model: {
-                          value: _vm.author,
-                          callback: function($$v) {
-                            _vm.author = $$v
-                          },
-                          expression: "author"
+                [
+                  _c(
+                    "el-button",
+                    {
+                      on: {
+                        click: function($event) {
+                          _vm.dialogVisible = false
                         }
-                      },
-                      [
-                        _c("el-option", {
-                          key: 0,
-                          attrs: { label: "Все авторы", value: 0 }
-                        }),
-                        _vm._v(" "),
-                        _vm._l(_vm.authors, function(item) {
-                          return _c("el-option", {
-                            key: item.id,
-                            attrs: { label: item.name, value: item.id }
-                          })
-                        })
-                      ],
-                      2
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "block" },
-                      [
-                        _c("span", { staticClass: "demonstration" }, [
-                          _vm._v("От: ")
-                        ]),
-                        _vm._v(" "),
-                        _c("el-date-picker", {
-                          attrs: {
-                            type: "date",
-                            "value-format": "yyyy-MM-dd",
-                            placeholder: "Выберите день"
-                          },
-                          model: {
-                            value: _vm.date_from,
-                            callback: function($$v) {
-                              _vm.date_from = $$v
-                            },
-                            expression: "date_from"
-                          }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "block" },
-                      [
-                        _c("span", { staticClass: "demonstration" }, [
-                          _vm._v("До: ")
-                        ]),
-                        _vm._v(" "),
-                        _c("el-date-picker", {
-                          attrs: {
-                            type: "date",
-                            "value-format": "yyyy-MM-dd",
-                            placeholder: "Выберите день"
-                          },
-                          model: {
-                            value: _vm.date_to,
-                            callback: function($$v) {
-                              _vm.date_to = $$v
-                            },
-                            expression: "date_to"
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "dialog-footer",
-                    attrs: { slot: "footer" },
-                    slot: "footer"
-                  },
-                  [
-                    _c(
-                      "el-button",
-                      {
-                        on: {
-                          click: function($event) {
-                            _vm.dialogVisible = false
-                          }
-                        }
-                      },
-                      [_vm._v("Отменить")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { type: "primary" },
-                        on: {
-                          click: function($event) {
-                            return _vm.filter_out()
-                          }
-                        }
-                      },
-                      [_vm._v("Применить")]
-                    )
-                  ],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _vm.tableNews
-              ? _c(
-                  "el-table",
-                  {
-                    staticStyle: { width: "100%" },
-                    attrs: { data: _vm.tableNews }
-                  },
-                  [
-                    _c("el-table-column", {
-                      attrs: { prop: "name", label: "Название", width: "300" }
-                    }),
-                    _vm._v(" "),
-                    _c("el-table-column", {
-                      attrs: { prop: "date", label: "Дата", width: "150" }
-                    }),
-                    _vm._v(" "),
-                    _c("el-table-column", {
-                      attrs: {
-                        prop: "author_name",
-                        label: "Автор",
-                        width: "150"
                       }
-                    }),
-                    _vm._v(" "),
-                    _c("el-table-column", {
-                      attrs: { prop: "announce", label: "Краткое описание" }
-                    })
-                  ],
-                  1
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.links
-              ? _c(
-                  "ul",
-                  {
-                    staticClass: "el-pager",
-                    staticStyle: { "font-size": "16px" }
-                  },
-                  _vm._l(_vm.links, function(ref) {
-                    var label = ref.label
-                    var url = ref.url
-                    return _c(
-                      "li",
-                      {
-                        staticClass: "number",
-                        on: {
-                          click: function($event) {
-                            return _vm.pagination({ url: url })
+                    },
+                    [_vm._v("Отменить")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
+                      on: {
+                        click: function($event) {
+                          return _vm.filterOut()
+                        }
+                      }
+                    },
+                    [_vm._v("Применить")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.tableNews
+            ? _c(
+                "el-table",
+                {
+                  staticStyle: { width: "100%" },
+                  attrs: { data: _vm.tableNews }
+                },
+                [
+                  _c("el-table-column", {
+                    attrs: { prop: "name", label: "Название", width: "300" },
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
+                              _c(
+                                "router-link",
+                                {
+                                  key: scope.row.id,
+                                  attrs: { to: "/news/" + scope.row.id }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(scope.row.name) +
+                                      "\n                    "
+                                  )
+                                ]
+                              )
+                            ]
                           }
                         }
-                      },
-                      [
-                        _vm._v(
-                          "\n                " +
-                            _vm._s(label) +
-                            "\n            "
-                        )
-                      ]
+                      ],
+                      null,
+                      false,
+                      1834041056
                     )
                   }),
-                  0
-                )
-              : _vm._e()
-          ],
-          1
-        )
-      ])
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "date", label: "Дата", width: "150" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "author_name", label: "Автор", width: "150" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "announce", label: "Краткое описание" }
+                  })
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.links
+            ? _c(
+                "div",
+                {
+                  staticStyle: {
+                    "font-size": "16px",
+                    margin: "20px 0",
+                    display: "flex"
+                  }
+                },
+                _vm._l(_vm.links, function(ref) {
+                  var label = ref.label
+                  var url = ref.url
+                  return _c(
+                    "span",
+                    {
+                      staticStyle: {
+                        margin: "0 5px",
+                        cursor: "pointer",
+                        padding: "5px 8px"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.pagination({ url: url })
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " + _vm._s(label) + "\n            "
+                      )
+                    ]
+                  )
+                }),
+                0
+              )
+            : _vm._e()
+        ],
+        1
+      )
     ],
     1
   )

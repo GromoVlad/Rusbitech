@@ -29,7 +29,7 @@
                         }
                     },
                     {
-                        "name": "date_from",
+                        "name": "dateFrom",
                         "in": "query",
                         "description": "Дата публикации от: (вводить в формате YYYY-MM-DD, например 2020-10-7)",
                         "required": false,
@@ -38,7 +38,7 @@
                         }
                     },
                     {
-                        "name": "date_to",
+                        "name": "dateTo",
                         "in": "query",
                         "description": "Дата публикации до: (вводить в формате YYYY-MM-DD, например 2020-10-7)",
                         "required": false,
@@ -53,6 +53,15 @@
                         "required": false,
                         "schema": {
                             "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "newsSearch",
+                        "in": "query",
+                        "description": "Поиск статьи по названию",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 ],
