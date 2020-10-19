@@ -129,6 +129,7 @@
                 axios
                     .get('/api/newsList' + this.$route.fullPath)
                     .then(response => {
+                        console.log(response);
                         this.authors = response.data.authors;
                         this.links = response.data.list.links;
                         this.tableNews = response.data.list.data;
@@ -161,7 +162,6 @@
             checkNewsTitle() {
                 if (this.newsSearch !== null) {
                     this.$router.push({path: this.queryParams, query: {newsSearch: this.newsSearch}})
-                    this.queryParams += '&newsSearch=' + this.newsSearch;
                 }
                 this.fetchData();
             }

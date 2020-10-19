@@ -65,9 +65,11 @@ class ApiController extends Controller
      *     @OA\Response(response="404", description="Ресурс не найден"),
      *     @OA\Response(response="500", description="Внутренняя ошибка сервера")
      * )
+     * @param Request $request
+     * @return array
      */
 
-    public function newsList(Request $request)
+    public function newsList(Request $request): array
     {
         $list = (new ListBuilder($request))->getList()->paginate(5)->withPath("?" . $request->getQueryString());
         $authors = Author::select('id', 'name')->get();
@@ -79,7 +81,6 @@ class ApiController extends Controller
      *     path="/news/{news_id}",
      *     tags = {"ApiController"},
      *     summary="Возвращает данные по конкретной новости",
-
      *     @OA\Parameter(
      *          name="news_id",
      *          in="path",
@@ -91,9 +92,11 @@ class ApiController extends Controller
      *     @OA\Response(response="404", description="Ресурс не найден"),
      *     @OA\Response(response="500", description="Внутренняя ошибка сервера")
      * )
+     * @param $news_id
+     * @return object
      */
 
-    public function news($news_id)
+    public function news($news_id): object
     {
         $info = News::where('news.id', $news_id)->leftJoin('authors', 'news.author_id', '=',
             'authors.id')->select('news.name', 'news.content', 'news.date', 'news.author_id', 'authors.rating',

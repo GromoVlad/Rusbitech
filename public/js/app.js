@@ -3546,6 +3546,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -3759,6 +3761,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.error = this.tableData = null;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/newsList' + this.$route.fullPath).then(function (response) {
+        console.log(response);
         _this.authors = response.data.authors;
         _this.links = response.data.list.links;
         _this.tableNews = response.data.list.data;
@@ -3820,7 +3823,6 @@ __webpack_require__.r(__webpack_exports__);
             newsSearch: this.newsSearch
           }
         });
-        this.queryParams += '&newsSearch=' + this.newsSearch;
       }
 
       this.fetchData();
@@ -65319,7 +65321,13 @@ var render = function() {
         "el-row",
         [
           _c("el-col", { attrs: { span: 18, offset: 3 } }, [
-            _c("h1", [_vm._v("Vue Single Page Application")])
+            _c("h1", [_vm._v("Vue Single Page Application")]),
+            _vm._v(" "),
+            _c("a", { attrs: { href: "http://rusbitech/api/documentation" } }, [
+              _vm._v("Документация")
+            ]),
+            _vm._v(" "),
+            _c("hr")
           ])
         ],
         1
@@ -81261,8 +81269,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\openserver\ospanel\domains\rusbitech\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\openserver\ospanel\domains\rusbitech\resources\css\app.css */"./resources/css/app.css");
+__webpack_require__(/*! D:\OpenServer\OSPanel\domains\rusbitech\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\OpenServer\OSPanel\domains\rusbitech\resources\css\app.css */"./resources/css/app.css");
 
 
 /***/ })
