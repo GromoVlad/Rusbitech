@@ -86,10 +86,19 @@
                 <el-table-column prop="announce" label="Краткое описание"></el-table-column>
             </el-table>
 
-            <ul v-if="links" class="el-pager">
-                <li class="number"
-                    style="margin: 0 5px; cursor: pointer; padding: 5px 8px;"
+            <ul v-if="links" class="el-pager" style="margin: 10px 0">
+                <li
+                    style="font-size: 16px"
                     v-for="{ label, url } in links"
+                    v-if="label === currentPage"
+                    class="number active"
+                    v-on:click="pagination({url})">
+                    {{ label }}
+                </li>
+                <li
+                    v-else
+                    style="font-size: 16px"
+                    class="number"
                     v-on:click="pagination({url})">
                     {{ label }}
                 </li>
@@ -114,6 +123,7 @@
                 dialogVisible: false,
                 newsSearch: null,
                 queryParams: '?',
+                currentPage: null,
             };
         },
         created() {
@@ -129,10 +139,10 @@
                 axios
                     .get('/api/newsList' + this.$route.fullPath)
                     .then(response => {
-                        console.log(response);
                         this.authors = response.data.authors;
                         this.links = response.data.list.links;
                         this.tableNews = response.data.list.data;
+                        this.currentPage = response.data.list.current_page;
                     }).catch(error => {
                     this.error = error.response.data.message || error.message;
                 });

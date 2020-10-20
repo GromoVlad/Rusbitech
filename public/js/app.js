@@ -3732,6 +3732,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3745,7 +3754,8 @@ __webpack_require__.r(__webpack_exports__);
       tableNews: null,
       dialogVisible: false,
       newsSearch: null,
-      queryParams: '?'
+      queryParams: '?',
+      currentPage: null
     };
   },
   created: function created() {
@@ -3761,10 +3771,10 @@ __webpack_require__.r(__webpack_exports__);
 
       this.error = this.tableData = null;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/newsList' + this.$route.fullPath).then(function (response) {
-        console.log(response);
         _this.authors = response.data.authors;
         _this.links = response.data.list.links;
         _this.tableNews = response.data.list.data;
+        _this.currentPage = response.data.list.current_page;
       })["catch"](function (error) {
         _this.error = error.response.data.message || error.message;
       });
@@ -65746,31 +65756,49 @@ var render = function() {
           _vm.links
             ? _c(
                 "ul",
-                { staticClass: "el-pager" },
+                { staticClass: "el-pager", staticStyle: { margin: "10px 0" } },
                 _vm._l(_vm.links, function(ref) {
                   var label = ref.label
                   var url = ref.url
-                  return _c(
-                    "li",
-                    {
-                      staticClass: "number",
-                      staticStyle: {
-                        margin: "0 5px",
-                        cursor: "pointer",
-                        padding: "5px 8px"
-                      },
-                      on: {
-                        click: function($event) {
-                          return _vm.pagination({ url: url })
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                " + _vm._s(label) + "\n            "
+                  return label === _vm.currentPage
+                    ? _c(
+                        "li",
+                        {
+                          staticClass: "number active",
+                          staticStyle: { "font-size": "16px" },
+                          on: {
+                            click: function($event) {
+                              return _vm.pagination({ url: url })
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(label) +
+                              "\n            "
+                          )
+                        ]
                       )
-                    ]
-                  )
+                    : _c(
+                        "li",
+                        {
+                          staticClass: "number",
+                          staticStyle: { "font-size": "16px" },
+                          on: {
+                            click: function($event) {
+                              return _vm.pagination({ url: url })
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(label) +
+                              "\n            "
+                          )
+                        ]
+                      )
                 }),
                 0
               )
