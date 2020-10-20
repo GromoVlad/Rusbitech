@@ -65745,20 +65745,15 @@ var render = function() {
           _vm._v(" "),
           _vm.links
             ? _c(
-                "div",
-                {
-                  staticStyle: {
-                    "font-size": "16px",
-                    margin: "20px 0",
-                    display: "flex"
-                  }
-                },
+                "ul",
+                { staticClass: "el-pager" },
                 _vm._l(_vm.links, function(ref) {
                   var label = ref.label
                   var url = ref.url
                   return _c(
-                    "span",
+                    "li",
                     {
+                      staticClass: "number",
                       staticStyle: {
                         margin: "0 5px",
                         cursor: "pointer",

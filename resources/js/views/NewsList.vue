@@ -86,14 +86,14 @@
                 <el-table-column prop="announce" label="Краткое описание"></el-table-column>
             </el-table>
 
-            <div v-if="links" style="font-size: 16px; margin: 20px 0; display: flex">
-                <span
+            <ul v-if="links" class="el-pager">
+                <li class="number"
                     style="margin: 0 5px; cursor: pointer; padding: 5px 8px;"
                     v-for="{ label, url } in links"
                     v-on:click="pagination({url})">
                     {{ label }}
-                </span>
-            </div>
+                </li>
+            </ul>
         </el-col>
     </el-row>
 </template>
