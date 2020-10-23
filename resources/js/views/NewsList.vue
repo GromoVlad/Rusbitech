@@ -176,7 +176,7 @@
                     this.$router.push({path: this.queryParams, query: {newsSearch: this.newsSearch}})
                 }
                 this.fetchData();
-            }
+            },
         }
     }
 </script>

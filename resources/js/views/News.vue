@@ -1,6 +1,15 @@
 <template>
     <el-row>
         <el-col :span="18" :offset="3">
+
+            <div v-if="error" class="error">
+                {{ error }}
+                <br>
+                <button @click.prevent="fetchData">
+                    Попробовать снова!
+                </button>
+            </div>
+
             <div v-if="news">
                 <el-col :span="18">
                     <el-card header="Статья" class="box-card">

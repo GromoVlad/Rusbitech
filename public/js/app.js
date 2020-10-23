@@ -3595,6 +3595,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     news: function news() {
@@ -65495,6 +65504,26 @@ var render = function() {
     "el-row",
     [
       _c("el-col", { attrs: { span: 18, offset: 3 } }, [
+        _vm.error
+          ? _c("div", { staticClass: "error" }, [
+              _vm._v("\n            " + _vm._s(_vm.error) + "\n            "),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.fetchData($event)
+                    }
+                  }
+                },
+                [_vm._v("\n                Попробовать снова!\n            ")]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _vm.news
           ? _c(
               "div",
