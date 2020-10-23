@@ -4,19 +4,28 @@
             <div v-if="news">
                 <el-col :span="18">
                     <el-card header="Статья" class="box-card">
-                        <p><strong>Название:</strong> {{ news.name }}</p>
-                        <p><strong>Дата создания:</strong> {{ news.date }}</p>
-                        <p><strong>Подробное описание:</strong> {{ news.content }}</p>
+                        <p><strong>Название:</strong></p>
+                        <p>{{ news.name }}</p>
+                        <p><strong>Дата создания:</strong></p>
+                        <router-link :to="'/?dateFrom=' + news.date + '&dateTo=' + news.date" tag="el-link">
+                            {{ news.date }}<i class="el-icon-view el-icon--right"></i>
+                        </router-link>
+                        <p><strong>Подробное описание:</strong></p>
+                        <p>{{ news.content }}</p>
                         <router-link :to="{ name: 'newsList' }">
-                            <el-page-header title="К новостям"></el-page-header>
+                            <el-button type="primary" icon="el-icon-arrow-left">К новостям</el-button>
                         </router-link>
                     </el-card>
                 </el-col>
                 <el-col :span="4" :offset="1">
                     <el-card header="Данные о авторе" class="box-card">
-                        <strong>Автор:</strong> {{ news.author_name }}<br>
-                        <strong>Рейтинг издания:</strong> {{ news.rating }}<br>
-                        <strong>Количество статей:</strong> {{ news.count_news }}<br>
+                        <router-link :to="'/?author=' + news.author_id" tag="el-link">
+                            <strong>Автор:</strong> {{ news.author_name }}<i class="el-icon-view el-icon--right"></i>
+                        </router-link>
+                        <p><strong>Рейтинг издания:</strong> {{ news.rating }}</p>
+                        <router-link :to="'/?author=' + news.author_id" tag="el-link">
+                            <strong>Количество статей:</strong> {{ news.count_news }}<i class="el-icon-view el-icon--right"></i>
+                        </router-link>
                     </el-card>
                 </el-col>
             </div>
@@ -24,13 +33,18 @@
     </el-row>
 </template>
 <script>
-    import axios from 'axios';
-
     export default {
+        computed: {
+            news () {
+                return this.$store.state.news
+            },
+            error () {
+                return this.$store.state.error
+            },
+        },
         data () {
             return {
                 id: this.$router.currentRoute.params['id'],
-                news: null,
             }
         },
         watch: {
@@ -43,15 +57,7 @@
         },
         methods: {
             fetchData() {
-                this.error = this.news = null;
-                axios
-                    .get('/api/news/' + this.id)
-                    .then(response => {
-                        this.news = response.data;
-                    }).catch(error => {
-                    this.loading = false;
-                    this.error = error.response.data.message || error.message;
-                });
+                this.$store.commit('getNews', '/api/news/' + this.id);
             },
         }
     }

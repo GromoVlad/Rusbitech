@@ -1,6 +1,7 @@
 Окружение:
 
 Apache 2.4 (PHP 7.2-7.4);
+
 PHP 7.4;
 
 PostgreSQL 12.2;

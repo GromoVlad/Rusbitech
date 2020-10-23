@@ -1,21 +1,22 @@
 <template>
     <el-row>
         <el-col :span="18" :offset="3">
+
             <div v-if="error" class="error">
                 {{ error }}
-                <p>
-                    <button @click.prevent="fetchData">
-                        Попробовать снова!
-                    </button>
-                </p>
+                <br>
+                <button @click.prevent="fetchData">
+                    Попробовать снова!
+                </button>
             </div>
 
             <el-row>
-                <el-input style="width: 30%; margin: 10px 0"
+                <el-input class="search_input"
                           placeholder="Найти новость по заголовку..."
                           v-model="newsSearch"
                           v-on:change="checkNewsTitle()"
                 ></el-input>
+                <el-button icon="el-icon-search" circle v-on:click="checkNewsTitle()"></el-button>
             </el-row>
 
             <el-button type="primary" @click="dialogVisible = true">Фильтры</el-button>
@@ -23,7 +24,6 @@
             <el-dialog
                 title="Фильтры:"
                 :visible.sync="dialogVisible"
-                width="50%"
             >
                 <el-row>
                     <el-col :span="6" :offset="1">
@@ -71,13 +71,16 @@
                 </span>
             </el-dialog>
 
-            <el-table v-if="tableNews" :data="tableNews" style="width: 100%">
+            <el-table v-if="tableNews" :data="tableNews">
                 <el-table-column prop="name" label="Название" width="300">
                     <template slot-scope="scope">
                         <router-link
+                            tag="el-link"
                             :to="'/news/' + scope.row.id"
                             :key="scope.row.id"
-                        >{{scope.row.name}}
+                        >
+                            {{scope.row.name}}
+                            <i class="el-icon-view el-icon--right"></i>
                         </router-link>
                     </template>
                 </el-table-column>
@@ -86,9 +89,8 @@
                 <el-table-column prop="announce" label="Краткое описание"></el-table-column>
             </el-table>
 
-            <ul v-if="links" class="el-pager" style="margin: 10px 0">
+            <ul v-if="links" class="el-pager">
                 <li
-                    style="font-size: 16px"
                     v-for="{ label, url } in links"
                     v-if="label === currentPage"
                     class="number active"
@@ -97,33 +99,43 @@
                 </li>
                 <li
                     v-else
-                    style="font-size: 16px"
                     class="number"
                     v-on:click="pagination({url})">
                     {{ label }}
                 </li>
             </ul>
+
         </el-col>
     </el-row>
 </template>
 
 <script>
-    import axios from 'axios';
-
     export default {
+        computed: {
+            authors () {
+                return this.$store.state.authors
+            },
+            links () {
+                return this.$store.state.links
+            },
+            tableNews () {
+                return this.$store.state.tableNews
+            },
+            currentPage () {
+                return this.$store.state.currentPage
+            },
+            error () {
+                return this.$store.state.error
+            },
+        },
         data() {
             return {
-                authors: null,
                 author: null,
-                error: null,
-                links: null,
                 dateFrom: null,
                 dateTo: null,
-                tableNews: null,
                 dialogVisible: false,
                 newsSearch: null,
                 queryParams: '?',
-                currentPage: null,
             };
         },
         created() {
@@ -135,17 +147,7 @@
         },
         methods: {
             fetchData() {
-                this.error = this.tableData = null;
-                axios
-                    .get('/api/newsList' + this.$route.fullPath)
-                    .then(response => {
-                        this.authors = response.data.authors;
-                        this.links = response.data.list.links;
-                        this.tableNews = response.data.list.data;
-                        this.currentPage = response.data.list.current_page;
-                    }).catch(error => {
-                    this.error = error.response.data.message || error.message;
-                });
+                this.$store.commit('getListNews', '/api/newsList' + this.$route.fullPath);
             },
             pagination(page) {
                 this.$router.push({path: this.queryParams, query: {page: page.url.slice(-1)}})
@@ -178,3 +180,18 @@
         }
     }
 </script>
+
+<style>
+    .search_input {
+        width: 30%;
+        margin: 10px 0
+    }
+
+    .el-pager {
+        margin: 10px 0;
+    }
+
+    .el-pager li {
+        font-size: 16px;
+    }
+</style>
