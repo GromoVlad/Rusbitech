@@ -29,3 +29,8 @@ PostgreSQL 12.2;
 по настройкам сайт должен открыться по url: http://rusbitech 
 
 документация находится по url: http://rusbitech/api/documentation
+
+PS: если сайт запускается не на виртуальном хосте http://rusbitech/, а на любом другом (localhost и т. д.)
+необходимо в файле /app/Http/Controllers/ApiController.php в строке 18 поменять url на актуальный, 
+чтобы запросы в swagger корректно отрабатывали и запустить команду
+php artisan l5-swagger:generate
